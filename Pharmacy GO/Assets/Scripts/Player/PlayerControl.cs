@@ -78,6 +78,20 @@ public class PlayerControl : MonoBehaviour
         CheckForEncounters();
     }
 
+ 
+
+    private void  OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("EncounterTile"))
+        {
+            if (UnityEngine.Random.Range(1, 101) <= 10)
+            {
+                animator.SetBool("isMoving", false);
+                OnEncountered();
+            }
+        }
+    }
+
     private bool IsWalkable(Vector3 targetPos)
     {
         if (Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) != null)
