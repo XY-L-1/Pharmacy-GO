@@ -179,6 +179,9 @@ public class GameController : MonoBehaviour
                 if (spawnPoint != null)
                 {
                     player.transform.position = spawnPoint.transform.position;
+                    player.ResetInput();
+                    player.DisableMovementTemporarily();
+
                 }
             }
         }

@@ -7,9 +7,12 @@ public class Portal : MonoBehaviour
     public int sceneBuildIndex; // Target scene index
     public string targetSpawnPointID; // Target spawn point ID
     public Direction entryDirection; // Direction for positioning
+    private bool isTransitioning = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isTransitioning) return;
+
         if (other.CompareTag("Player"))
         {
             Debug.Log($"Portal triggered by: {other.name}");
@@ -19,10 +22,10 @@ public class Portal : MonoBehaviour
 
     private IEnumerator TransitionToScene()
     {
-        Debug.Log("Starting scene transition...");
+        isTransitioning = true;
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneBuildIndex);
         yield return new WaitUntil(() => operation.isDone);
-
+        isTransitioning = false;
         Debug.Log("Scene load complete. Looking for spawn point...");
 
         // Reposition the player
@@ -37,6 +40,7 @@ public class Portal : MonoBehaviour
 
                 // Reset input and movement
                 player.ResetInput();
+                player.DisableMovementTemporarily();
             }
             else
             {
@@ -47,20 +51,17 @@ public class Portal : MonoBehaviour
         {
             Debug.LogError("Player instance not found!");
         }
+
+        isTransitioning = false;
     }
 
     public SpawnPoint FindTargetSpawnPoint()
     {
-        Debug.Log($"Finding SpawnPoint with ID: {targetSpawnPointID}");
         SpawnPoint[] spawnPoints = FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
-        Debug.Log($"Found {spawnPoints.Length} spawn points in the scene.");
-
         foreach (var spawnPoint in spawnPoints)
         {
-            Debug.Log($"Checking SpawnPoint: {spawnPoint.spawnPointID}");
             if (spawnPoint.spawnPointID == targetSpawnPointID)
             {
-                Debug.Log($"Found matching SpawnPoint: {spawnPoint.spawnPointID}");
                 return spawnPoint;
             }
         }
@@ -76,16 +77,16 @@ public class Portal : MonoBehaviour
         switch (direction)
         {
             case Direction.Up:
-                newPos.y += 1;
+                newPos.y += 5;
                 break;
             case Direction.Down:
-                newPos.y -= 1;
+                newPos.y -= 5;
                 break;
             case Direction.Left:
-                newPos.x -= 1;
+                newPos.x -= 5;
                 break;
             case Direction.Right:
-                newPos.x += 1;
+                newPos.x += 5;
                 break;
         }
 

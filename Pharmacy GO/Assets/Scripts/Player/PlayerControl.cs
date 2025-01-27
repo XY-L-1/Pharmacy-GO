@@ -139,8 +139,10 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator PreventMovementOnSpawn()
     {
         canMove = false; // Disable movement
+        Debug.Log("Movement disabled temporarily.");
         yield return new WaitForSeconds(0.5f); // Wait for half a second
         canMove = true; // Re-enable movement
+        Debug.Log("Movement re-enabled.");
     }
 
     // Call this in the Portal script after setting the player's position:
