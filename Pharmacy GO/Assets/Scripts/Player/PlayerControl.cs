@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -16,17 +17,35 @@ public class PlayerControl : MonoBehaviour
     private Vector2 input;
 
     private Animator animator;
+
+    public static PlayerControl Instance { get; private set; }
+
+    private bool canMove = true;
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate players
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void HandleUpdate()
     {
+        if (!canMove) return; // Prevent movement
+
         if (!isMoving){ 
             // Get the input from the player
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
+
+            Debug.Log($"Player Input: {input}");
 
             if (input != Vector2.zero)
             {   
@@ -66,6 +85,7 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Move(Vector3 targetPos)
     {
+        Debug.Log($"Starting Move: TargetPos = {targetPos}");
         isMoving = true;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) // while the distance between the player and the target position is greater than 0
         {
@@ -74,23 +94,26 @@ public class PlayerControl : MonoBehaviour
         }
         transform.position = targetPos;
         isMoving = false;
+        Debug.Log($"Finished Move: CurrentPos = {transform.position}");
 
         CheckForEncounters();
     }
 
  
 
-    private void  OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("EncounterTile"))
-        {
-            if (UnityEngine.Random.Range(1, 101) <= 10)
-            {
-                animator.SetBool("isMoving", false);
-                OnEncountered();
-            }
-        }
-    }
+    // private void  OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("EncounterTile"))
+    //     {
+    //         if (UnityEngine.Random.Range(1, 101) <= 10)
+    //         {
+    //             animator.SetBool("isMoving", false);
+    //             OnEncountered();
+    //         }
+    //     }
+    // }
+
+    
 
     private bool IsWalkable(Vector3 targetPos)
     {
@@ -112,4 +135,28 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator PreventMovementOnSpawn()
+    {
+        canMove = false; // Disable movement
+        yield return new WaitForSeconds(0.5f); // Wait for half a second
+        canMove = true; // Re-enable movement
+    }
+
+    // Call this in the Portal script after setting the player's position:
+    public void DisableMovementTemporarily()
+    {
+        StartCoroutine(PreventMovementOnSpawn());
+    }
+
+
+    public void ResetInput()
+    {
+        input = Vector2.zero;
+        animator.SetBool("isMoving", false);
+        animator.SetFloat("moveX", 0);
+        animator.SetFloat("moveY", 0);
+        Debug.Log("Input and animator reset.");
+    }
+
 }

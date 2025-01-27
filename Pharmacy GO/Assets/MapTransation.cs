@@ -1,9 +1,7 @@
 using Unity.Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MapTransition : MonoBehaviour
+public class MapTransation : MonoBehaviour
 {
     [SerializeField] PolygonCollider2D mapBoundary;
     CinemachineConfiner2D confiner;
