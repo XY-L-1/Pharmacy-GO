@@ -19,9 +19,9 @@ public class BattleSystem : MonoBehaviour
     int currentAction;  // store user selected action
     int currentAnswer;  // store user selected answer
     IEnumerator chooseAction;
-    QuestionBase question;
+    Question question;
 
-    private string[] shuffleAnswersList;
+    private Option[] shuffleAnswersList;
     private int shuffleAnswersIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartBattle()
@@ -40,8 +40,8 @@ public class BattleSystem : MonoBehaviour
     // filling the question and answer texts
     public IEnumerator SetupBattle()
     {
-        shuffleAnswersList = (string[])question.Answers.Clone();
-        shuffleAnswersIndex = question.CorrectAnswerIndex;
+        shuffleAnswersList = (Option[]) question.options.ToArray();
+        shuffleAnswersIndex = question.answerIndex;
         ShuffleAnswers(shuffleAnswersList, ref shuffleAnswersIndex);
         StartCoroutine(questionSection.TypeQuestion(question));
         dialogBox.SetAnswerTexts(shuffleAnswersList);
@@ -175,14 +175,14 @@ public class BattleSystem : MonoBehaviour
         OnBattleOver(answerCorrect);
     }                                                                                                                                                                                                                            
 
-    private void ShuffleAnswers(string[] answerChoices, ref int correctAnswerIndex)
+    private void ShuffleAnswers(Option[] answerChoices, ref int correctAnswerIndex)
     {
         System.Random rng = new System.Random();
         for (int i = 0; i < answerChoices.Length; i++)
         {
             int randomIndex = rng.Next(i, answerChoices.Length);
 
-            string temp = answerChoices[i];
+            Option temp = answerChoices[i];
             answerChoices[i] = answerChoices[randomIndex];
             answerChoices[randomIndex] = temp;
 

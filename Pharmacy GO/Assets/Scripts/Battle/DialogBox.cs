@@ -76,12 +76,12 @@ public class DialogBox : MonoBehaviour
         }
     }
     // fill in the answer texts into choices container
-    public void SetAnswerTexts(string[] answers)
+    public void SetAnswerTexts(Option[] answers)
     {
         for (int i = 0; i < choices.Count; i++)
         {
             if (i < answers.Length)
-                choices[i].text = answers[i];
+                choices[i].text = answers[i].ToString();
             else
                 choices[i].text = "";
         }

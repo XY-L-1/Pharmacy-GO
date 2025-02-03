@@ -7164,7 +7164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6422702651198409bad84b9776f1ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionText: {fileID: 0}
+  questionText: {fileID: 1594245890}
   questionImage: {fileID: 0}
 --- !u!224 &1672668495
 RectTransform:
@@ -23207,9 +23207,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomQuestions:
-  - {fileID: 11400000, guid: 10e258f50bf743346a9485cfd4c3689c, type: 2}
-  - {fileID: 11400000, guid: f11a8b298a915df44ac8d466f2a1f5e0, type: 2}
-  - {fileID: 11400000, guid: 3ca22299e4b0d2c45bdeef10ef93c968, type: 2}
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
   correctAnswer: 8
   wrongAnswer: -5
 --- !u!1660057539 &9223372036854775807
