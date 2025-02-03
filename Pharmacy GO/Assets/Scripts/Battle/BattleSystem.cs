@@ -44,7 +44,23 @@ public class BattleSystem : MonoBehaviour
         shuffleAnswersIndex = question.CorrectAnswerIndex;
         ShuffleAnswers(shuffleAnswersList, ref shuffleAnswersIndex);
         StartCoroutine(questionSection.TypeQuestion(question));
-        dialogBox.SetAnswerTexts(shuffleAnswersList);
+        if (shuffleAnswersList != null)
+        {
+            dialogBox.SetAnswerTexts(shuffleAnswersList);
+        }
+        else
+        {
+            dialogBox.SetAnswerTexts(new string[0]); // Pass an empty array if null
+        }
+        if (question.AnswersImg != null)
+        {
+            Sprite[] clonedAnswerImages = (Sprite[])question.AnswersImg.Clone();
+            dialogBox.SetAnswerImages(clonedAnswerImages);
+        }
+        else
+        {
+            dialogBox.SetAnswerImages(null); // Pass null if there are no images
+        }
         questionUnit.SetImage(question);
         yield return StartCoroutine(dialogBox.TypeDialog("A wild question appeared!"));
         yield return new WaitForSeconds(1f);

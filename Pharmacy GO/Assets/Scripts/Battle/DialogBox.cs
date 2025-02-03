@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 public class DialogBox : MonoBehaviour
 {
     public int letterPerSecond = 30;
@@ -18,8 +19,10 @@ public class DialogBox : MonoBehaviour
     [SerializeField] private TMP_Text dialogText;
     [SerializeField] private GameObject actionSelector;
     [SerializeField] private GameObject choiceSelector;
+    [SerializeField] private GameObject ImageChoiceSelector;
     [SerializeField] List<TMP_Text> actionTexts;
     [SerializeField] List<TMP_Text> choices;
+    [SerializeField] private List<Image> imageChoices;
     public void SetDialog(string dialog)
     {
         dialogText.text = dialog;
@@ -50,6 +53,11 @@ public class DialogBox : MonoBehaviour
         choiceSelector.SetActive(enabled);
     }
 
+    public void EnableImageChoiceSelector(bool enabled)
+    {
+        ImageChoiceSelector.SetActive(enabled);
+    }
+
     public void UpdateActionSelection(int selectedAction)
     {
         for (int i = 0; i < actionTexts.Count; i++)
@@ -75,9 +83,11 @@ public class DialogBox : MonoBehaviour
             }
         }
     }
+
     // fill in the answer texts into choices container
     public void SetAnswerTexts(string[] answers)
     {
+        EnableImageChoiceSelector(false);
         for (int i = 0; i < choices.Count; i++)
         {
             if (i < answers.Length)
@@ -86,6 +96,26 @@ public class DialogBox : MonoBehaviour
                 choices[i].text = "";
         }
     }
+
+    public void SetAnswerImages(Sprite[] answerImages)
+    {
+        EnableChoiceSelector(false); // Use image choice selector
+
+        for (int i = 0; i < imageChoices.Count; i++)
+        {
+            if (i < answerImages.Length && answerImages[i] != null)
+            {
+                imageChoices[i].sprite = answerImages[i];
+                imageChoices[i].enabled = true;
+            }
+            else
+            {
+                imageChoices[i].sprite = null;
+                imageChoices[i].enabled = false;
+            }
+        }
+    }
+
 
     // Display the Correct or Wrong answer
     public bool DisplayAnswer(int selectedChoiceIndex, int correctAnswerIndex)
@@ -109,6 +139,7 @@ public class DialogBox : MonoBehaviour
         dialogText.text = "";
         EnableActionSelector(false);
         EnableChoiceSelector(false);
+        EnableImageChoiceSelector(false);
     }
     
 }
