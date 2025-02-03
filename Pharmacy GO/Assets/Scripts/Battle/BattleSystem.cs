@@ -83,6 +83,7 @@ public class BattleSystem : MonoBehaviour
             dialogBox.EnableDialogText(true);
             dialogBox.EnableActionSelector(false);
             dialogBox.EnableChoiceSelector(false);
+            dialogBox.EnableImageChoiceSelector(false);
         }
         
         else if (state == BattleState.PLAYERACTION)
@@ -94,6 +95,7 @@ public class BattleSystem : MonoBehaviour
             dialogBox.EnableActionSelector(false);
             dialogBox.EnableDialogText(false);
             dialogBox.EnableChoiceSelector(true);
+            dialogBox.EnableImageChoiceSelector(true);
             HandleAnswer();
         }
         else if (state == BattleState.END)
@@ -101,6 +103,7 @@ public class BattleSystem : MonoBehaviour
             dialogBox.EnableDialogText(true);
             dialogBox.EnableActionSelector(false);
             dialogBox.EnableChoiceSelector(false);
+            dialogBox.EnableImageChoiceSelector(false);
         }
 
     }

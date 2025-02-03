@@ -88,6 +88,7 @@ public class DialogBox : MonoBehaviour
     public void SetAnswerTexts(string[] answers)
     {
         EnableImageChoiceSelector(false);
+        EnableChoiceSelector(true);
         for (int i = 0; i < choices.Count; i++)
         {
             if (i < answers.Length)
@@ -100,6 +101,7 @@ public class DialogBox : MonoBehaviour
     public void SetAnswerImages(Sprite[] answerImages)
     {
         EnableChoiceSelector(false); // Use image choice selector
+        EnableImageChoiceSelector(true);
 
         for (int i = 0; i < imageChoices.Count; i++)
         {
