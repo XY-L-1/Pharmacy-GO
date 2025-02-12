@@ -94,8 +94,14 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.EnableActionSelector(false);
             dialogBox.EnableDialogText(false);
-            dialogBox.EnableChoiceSelector(true);
-            dialogBox.EnableImageChoiceSelector(true);
+            if (question.AnswersImg != null && question.AnswersImg.Length > 0)
+            {
+                dialogBox.EnableImageChoiceSelector(true);
+            }
+            else
+            {
+                dialogBox.EnableChoiceSelector(true);
+            }
             HandleAnswer();
         }
         else if (state == BattleState.END)
@@ -140,36 +146,51 @@ public class BattleSystem : MonoBehaviour
 
     void HandleAnswer()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        bool hasImageAnswers = question.AnswersImg != null && question.AnswersImg.Length > 0;
+        int maxAnswers = hasImageAnswers ? question.AnswersImg.Length : shuffleAnswersList.Length;
+
+        if (Input.GetKeyDown(KeyCode.D)) // Move Right
         {
-            if (currentAnswer < shuffleAnswersList.Length - 1)
+            if (currentAnswer < maxAnswers - 1)
                 ++currentAnswer;
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A)) // Move Left
         {
             if (currentAnswer > 0)
                 --currentAnswer;
         }
-       
-       if (Input.GetKeyDown(KeyCode.S))
-       {
-              if (currentAnswer < shuffleAnswersList.Length - 2)
+
+        if (Input.GetKeyDown(KeyCode.S)) // Move Down
+        {
+            if (currentAnswer < maxAnswers - 2)
                 currentAnswer += 3;
-         }
-         else if (Input.GetKeyDown(KeyCode.W))
-         {
-              if (currentAnswer > 2)
+        }
+        else if (Input.GetKeyDown(KeyCode.W)) // Move Up
+        {
+            if (currentAnswer > 2)
                 currentAnswer -= 3;
-       }
+        }
 
-       dialogBox.UpdateChoiceSelection(currentAnswer);
+        // Update selection based on answer type
+        if (hasImageAnswers)
+        {
+            dialogBox.UpdateImageChoiceSelection(currentAnswer);
+        }
+        else
+        {
+            dialogBox.UpdateChoiceSelection(currentAnswer);
+        }
 
-       if (Input.GetKeyDown(KeyCode.Z) && !dialogBox.GetAnswerSelected())
+        if (Input.GetKeyDown(KeyCode.Z) && !dialogBox.GetAnswerSelected())
         {
             bool isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
             StartCoroutine(EndBattle(isCorrect));
         }
-        dialogBox.UpdateActionSelection(currentAnswer);
+
+        if (!hasImageAnswers)
+        {
+            dialogBox.UpdateActionSelection(currentAnswer);
+        }
     }
     IEnumerator EndBattle(bool answerCorrect)
     {

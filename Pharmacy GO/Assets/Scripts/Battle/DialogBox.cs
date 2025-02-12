@@ -83,6 +83,28 @@ public class DialogBox : MonoBehaviour
             }
         }
     }
+    public void UpdateImageChoiceSelection(int selectedChoice)
+    {
+        if (answerSelected) return;
+
+        for (int i = 0; i < imageChoices.Count; i++)
+        {
+            Outline outline = imageChoices[i].GetComponent<Outline>();
+
+            if (outline != null)
+            {
+                if (i == selectedChoice)
+                {
+                    outline.effectColor = new Color(0, 1, 1, 1); // Blue highlight
+                }
+                else
+                {
+                    outline.effectColor = new Color(0, 0, 0, 0); // Fully transparent
+                }
+            }
+        }
+    }
+
 
     // fill in the answer texts into choices container
     public void SetAnswerTexts(string[] answers)
