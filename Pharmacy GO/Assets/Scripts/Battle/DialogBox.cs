@@ -130,6 +130,7 @@ public class DialogBox : MonoBehaviour
             if (i < answerImages.Length && answerImages[i] != null)
             {
                 imageChoices[i].sprite = answerImages[i];
+                imageChoices[i].preserveAspect = true;
                 imageChoices[i].enabled = true;
             }
             else
