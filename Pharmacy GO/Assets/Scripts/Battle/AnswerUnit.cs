@@ -16,6 +16,7 @@ public class AnswerUnit : MonoBehaviour
         {
             image.sprite = question.AnswersImg[answerIndex];
             image.enabled = true;  // Ensure the image is visible
+
         }
         else
         {

@@ -183,7 +183,17 @@ public class BattleSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z) && !dialogBox.GetAnswerSelected())
         {
-            bool isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
+            bool isCorrect;
+            if (hasImageAnswers)
+            {
+                isCorrect = dialogBox.DisplayImageAnswer(currentAnswer, shuffleAnswersIndex);
+
+            }
+            else
+            {
+                isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
+            }
+
             StartCoroutine(EndBattle(isCorrect));
         }
 

@@ -156,7 +156,44 @@ public class DialogBox : MonoBehaviour
             choices[correctAnswerIndex].color = Color.green;
             return false;
         }
-    } 
+    }
+
+    public bool DisplayImageAnswer(int selectedChoiceIndex, int correctAnswerIndex)
+    {
+        answerSelected = true;
+        Debug.Log("Selected choice index: " + selectedChoiceIndex);
+
+        for (int i = 0; i < imageChoices.Count; i++)
+        {
+            Outline outline = imageChoices[i].GetComponent<Outline>();
+
+            if (outline != null)
+            {
+                if (i == selectedChoiceIndex)
+                {
+                    if (i == correctAnswerIndex)
+                    {
+                        outline.effectColor = Color.green; // Correct answer -> Green outline
+                    }
+                    else
+                    {
+                        outline.effectColor = Color.red; // Wrong answer -> Red outline
+                    }
+                }
+                else if (i == correctAnswerIndex)
+                {
+                    outline.effectColor = Color.green; // Ensure correct answer is green
+
+                }
+                else
+                {
+                    outline.effectColor = new Color(0, 0, 0, 0); // Hide outlines for unselected
+                }
+            }
+        }
+
+        return selectedChoiceIndex == correctAnswerIndex;
+    }
 
     public void ResetDalogBox()
     {
