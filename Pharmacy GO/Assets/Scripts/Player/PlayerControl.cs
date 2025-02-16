@@ -17,13 +17,19 @@ public class PlayerControl : MonoBehaviour
 
     public event Action OnEncountered;
 
+    public int numberOfAreas = 4;  // Adjust based on the number of areas
+
     private bool isMoving;
     private Vector2 input;
 
     private Animator animator;
 
+    private List<bool> areaTracker; // List of areas the player has triggered
+
     private void Awake()
     {
+        areaTracker = new List<bool>(new bool[numberOfAreas]);  // Initializes all to false
+   
         animator = GetComponent<Animator>();
 
         if (Instance != null && Instance != this)
@@ -136,7 +142,19 @@ public class PlayerControl : MonoBehaviour
         animator.SetBool("isMoving", false);
     }
 
-    
+    public void SetAreaTracker(int areaIndex)
+    {
+        if (areaIndex >= 0 && areaIndex < areaTracker.Count)
+        {
+            areaTracker[areaIndex] = true;
+            Debug.Log("Player triggered area: " + areaIndex);
+        }
+    }
+
+    public bool HasTriggeredArea(int areaIndex)
+    {
+        return areaIndex >= 0 && areaIndex < areaTracker.Count && areaTracker[areaIndex];
+    }
 
 
 
