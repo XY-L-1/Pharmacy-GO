@@ -7,6 +7,9 @@ public class SpawnPoint : MonoBehaviour
 
     private void Start()
     {
+        //if (!PlayerPrefs.HasKey("SpawnPointID"))
+        //    return;
+
         string lastSpawnPointID = PlayerPrefs.GetString("SpawnPointID", "");
 
         if (lastSpawnPointID == spawnPointID)
@@ -32,5 +35,7 @@ public class SpawnPoint : MonoBehaviour
                 }
             }
         }
+
+        // PlayerPrefs.DeleteKey("SpawnPointID");
     }
 }

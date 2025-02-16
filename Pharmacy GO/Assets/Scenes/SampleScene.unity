@@ -9495,6 +9495,51 @@ MonoBehaviour:
   buttonPrefab: {fileID: 8879953854670777811, guid: 255156fe03fefb8469e67bd73148deef, type: 3}
   scrollRectPrefab: {fileID: 3477218868914114103, guid: 6a0daec9619a2194cb721ca71e2f2659, type: 3}
   IndexUIPanel: {fileID: 1459909422}
+--- !u!1 &1501661895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1501661897}
+  - component: {fileID: 1501661896}
+  m_Layer: 0
+  m_Name: SpawnPoint_FromEastRoute
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1501661896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501661895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed96e364bf19804bbb7bd7c749f8fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPointID: SpawnFromEastRoute
+--- !u!4 &1501661897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501661895}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.44, y: 0.03, z: 7.925051}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1594245889
 GameObject:
   m_ObjectHideFlags: 0
@@ -27131,3 +27176,4 @@ SceneRoots:
   - {fileID: 823457326}
   - {fileID: 1459909426}
   - {fileID: 2002701621}
+  - {fileID: 1501661897}
