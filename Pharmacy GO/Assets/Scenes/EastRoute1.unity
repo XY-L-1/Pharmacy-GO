@@ -351,6 +351,7 @@ MonoBehaviour:
   dialogText: {fileID: 1513350751}
   actionSelector: {fileID: 1936706221}
   choiceSelector: {fileID: 1900742602}
+  ImageChoiceSelector: {fileID: 0}
   actionTexts:
   - {fileID: 703556995}
   - {fileID: 357058624}
@@ -360,6 +361,7 @@ MonoBehaviour:
   - {fileID: 45828348}
   - {fileID: 1819635312}
   - {fileID: 769792634}
+  imageChoices: []
 --- !u!1 &153440220
 GameObject:
   m_ObjectHideFlags: 0
@@ -10497,7 +10499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneBuildIndex: 4
-  targetSpawnPointID: 
+  targetSpawnPointID: SpawnFromEastRoute
 --- !u!61 &1183155794
 BoxCollider2D:
   m_ObjectHideFlags: 0
