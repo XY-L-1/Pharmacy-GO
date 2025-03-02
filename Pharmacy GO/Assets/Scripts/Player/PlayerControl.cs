@@ -17,10 +17,17 @@ public class PlayerControl : MonoBehaviour
 
     public event Action OnEncountered;
 
+    private Coroutine moveCoroutine;
+
+    private bool isInEncounter = false;
+
     private bool isMoving;
     private Vector2 input;
 
     private Animator animator;
+
+    [SerializeField] private GameObject ExclamationMark;
+
 
     private void Awake()
     {
@@ -37,11 +44,15 @@ public class PlayerControl : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         // DontDestroyOnLoad(gameObject);
+        if (ExclamationMark != null)
+        {
+            ExclamationMark.SetActive(false);
+        }
     }
 
     public void HandleUpdate()
     {
-        if (!isMoving){ 
+        if (!isMoving && !isInEncounter){ 
             // Get the input from the player
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
@@ -85,6 +96,12 @@ public class PlayerControl : MonoBehaviour
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
+        moveCoroutine = StartCoroutine(MoveCoroutine(targetPos)); // Store the coroutine reference
+        yield return moveCoroutine; // Wait for the coroutine to finish
+    }
+
+    private IEnumerator MoveCoroutine(Vector3 targetPos)
+    {
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) // while the distance between the player and the target position is greater than 0
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
@@ -112,17 +129,50 @@ public class PlayerControl : MonoBehaviour
             if (UnityEngine.Random.Range(1, 101) <= 50)
             {
                 animator.SetBool("isMoving", false);
-                OnEncountered();
+                StartCoroutine(ShowExclamationAndEncounter());
+
             }
         }
     }
 
 
+    private IEnumerator ShowExclamationAndEncounter()
+    {
+        isInEncounter = true;  // Set flag to true when encounter starts
+        Debug.Log("Showing Exclamation Mark"); // Debugging line
+        ExclamationMark.SetActive(true); // Show the exclamation mark
+
+        // Flashing effect
+        float flashDuration = 1.0f;  // Total duration for the flashing effect
+        float flashInterval = 0.1f;  // Interval for each flash (toggle visibility)
+        float timer = 0f;  // Timer to keep track of the flashing duration
+
+        while (timer < flashDuration)
+        {
+            ExclamationMark.SetActive(!ExclamationMark.activeSelf); // Toggle visibility
+            timer += flashInterval;
+            yield return new WaitForSeconds(flashInterval); // Wait before toggling again
+        }
+
+        // After flashing, keep the exclamation mark visible for a moment before hiding
+        ExclamationMark.SetActive(true);  // Ensure the exclamation mark is visible at the end
+        yield return new WaitForSeconds(0.5f);  // Optional delay before hiding
+
+        Debug.Log("Hiding Exclamation Mark"); // Debugging line
+        ExclamationMark.SetActive(false);  // Hide the exclamation mark
+        OnEncountered();  // Trigger any other encounter-related events
+        isInEncounter = false;  // Reset the flag after encounter
+    }
+
     // New-map
     public void StopMovement()
     {
         // Stop any running movement coroutine
-        StopAllCoroutines();
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);  // Stop the specific movement coroutine
+            moveCoroutine = null;  // Reset the coroutine reference
+        }
 
         isMoving = false;
         input = Vector2.zero;
