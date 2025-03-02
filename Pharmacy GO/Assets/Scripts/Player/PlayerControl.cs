@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator MoveCoroutine(Vector3 targetPos)
     {
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) // while the distance between the player and the target position is greater than 0
+        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) 
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
@@ -138,30 +138,30 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator ShowExclamationAndEncounter()
     {
-        isInEncounter = true;  // Set flag to true when encounter starts
-        Debug.Log("Showing Exclamation Mark"); // Debugging line
-        ExclamationMark.SetActive(true); // Show the exclamation mark
+        isInEncounter = true;  
+
+        ExclamationMark.SetActive(true); 
 
         // Flashing effect
-        float flashDuration = 1.0f;  // Total duration for the flashing effect
-        float flashInterval = 0.1f;  // Interval for each flash (toggle visibility)
-        float timer = 0f;  // Timer to keep track of the flashing duration
+        float flashDuration = 1.0f;  
+        float flashInterval = 0.1f;  
+        float timer = 0f; 
 
         while (timer < flashDuration)
         {
-            ExclamationMark.SetActive(!ExclamationMark.activeSelf); // Toggle visibility
+            ExclamationMark.SetActive(!ExclamationMark.activeSelf); 
             timer += flashInterval;
-            yield return new WaitForSeconds(flashInterval); // Wait before toggling again
+            yield return new WaitForSeconds(flashInterval);
         }
 
-        // After flashing, keep the exclamation mark visible for a moment before hiding
-        ExclamationMark.SetActive(true);  // Ensure the exclamation mark is visible at the end
-        yield return new WaitForSeconds(0.5f);  // Optional delay before hiding
 
-        Debug.Log("Hiding Exclamation Mark"); // Debugging line
-        ExclamationMark.SetActive(false);  // Hide the exclamation mark
-        OnEncountered();  // Trigger any other encounter-related events
-        isInEncounter = false;  // Reset the flag after encounter
+        ExclamationMark.SetActive(true); 
+        yield return new WaitForSeconds(0.5f);  
+
+        Debug.Log("Hiding Exclamation Mark"); 
+        ExclamationMark.SetActive(false);  
+        OnEncountered();  
+        isInEncounter = false;  
     }
 
     // New-map
