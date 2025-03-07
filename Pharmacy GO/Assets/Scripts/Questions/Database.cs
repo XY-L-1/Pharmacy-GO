@@ -90,18 +90,23 @@ public class Option
 
     public (OptionType, string) grabOption()
     {
-        if (@string == null && image == null) // Has no image or string
+        if (@string.Length == 0 && image.Length == 0) // Has no image or string
         {
             return (OptionType.None, "Failed to load option");
         }
-        if (@string != null && image == null) // Has no image and has 1 string
+        if (@string.Length != 0 && image.Length == 0) // Has no image and has 1 string
         {
             return (OptionType.String, @string);
         }
-        if (@string == null && image != null) // Has 1 image and has no string
+        if (@string.Length == 0 && image.Length != 0) // Has 1 image and has no string
         {
             return (OptionType.Image, image);
         }
         return (OptionType.None, "Option has both Text and Images");
+    }
+
+    public override string ToString()
+    {
+        return @string.Length == 0 ? @string : image;
     }
 }

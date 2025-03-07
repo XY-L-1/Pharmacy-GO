@@ -29,6 +29,8 @@ public class BattleSystem : MonoBehaviour
 
         this.state = BattleState.START;
         this.question = mapData.GetRandomQuestion();
+        Debug.Log(this.question.question);
+        Debug.Log(this.question.options);
         currentAction = 0;
         currentAnswer = 0;      
         dialogBox.ResetDalogBox();
@@ -138,7 +140,7 @@ public class BattleSystem : MonoBehaviour
     void HandleAnswer()
     {
         bool hasImageAnswers = dialogBox.currentOptions == DialogBox.AnswersType.Image;
-        int maxAnswers =question.options.Count;
+        int maxAnswers = question.options.Count;
 
         if (Input.GetKeyDown(KeyCode.D)) // Move Right
         {
@@ -151,16 +153,16 @@ public class BattleSystem : MonoBehaviour
                 --currentAnswer;
         }
 
-        if (Input.GetKeyDown(KeyCode.S)) // Move Down
-        {
-            if (currentAnswer < maxAnswers - 2)
-                currentAnswer += 3;
-        }
-        else if (Input.GetKeyDown(KeyCode.W)) // Move Up
-        {
-            if (currentAnswer > 2)
-                currentAnswer -= 3;
-        }
+        // if (Input.GetKeyDown(KeyCode.S)) // Move Down
+        // {
+        //     if (currentAnswer < maxAnswers - 2)
+        //         currentAnswer += 3;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.W)) // Move Up
+        // {
+        //     if (currentAnswer > 2)
+        //         currentAnswer -= 3;
+        // }
 
         // Update selection based on answer type
         

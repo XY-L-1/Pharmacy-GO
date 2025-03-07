@@ -60,8 +60,8 @@ public class DialogBox : MonoBehaviour
     public void EnableOptionSelector(bool enabled)
     {
         optionSelector.SetActive(enabled);
-        optionImages = GetComponentsInChildren<RawImage>(true);
-        optionStrings = GetComponentsInChildren<TMP_Text>(true);
+        optionImages = optionSelector.GetComponentsInChildren<RawImage>(true);
+        optionStrings = optionSelector.GetComponentsInChildren<TMP_Text>(true);
     }
 
     public void UpdateChoiceSelection(int selectedChoice)
@@ -76,22 +76,22 @@ public class DialogBox : MonoBehaviour
                 {
                     if (currentOptions == AnswersType.String)
                     {
-                        optionStrings[selectedChoice].color = Color.red;
+                        optionStrings[i].color = Color.cyan;
                     }
                     else if (currentOptions == AnswersType.Image)
                     {
-                        optionImages[selectedChoice].GetComponent<Outline>().effectColor = Color.red;
+                        optionImages[i].gameObject.GetComponent<Outline>().effectColor = new Color(0, 0, 1, 1);
                     }
                 }
                 else
                 {
                     if (currentOptions == AnswersType.String)
                     {
-                        optionStrings[selectedChoice].color = Color.black;
+                        optionStrings[i].color = Color.black;
                     }
                     else if (currentOptions == AnswersType.Image)
                     {
-                        optionImages[selectedChoice].GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0);
+                        optionImages[i].gameObject.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0);
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class DialogBox : MonoBehaviour
     {
         // Check type of answer 1
         (Option.OptionType, string) firstIndex = answers[0].grabOption();
-
+        Debug.Log(firstIndex.Item1);
         string[] values = new string[answers.Length];
         for (int i = 0; i < answers.Length; i++)
         {
@@ -115,10 +115,20 @@ public class DialogBox : MonoBehaviour
                 break;
             case Option.OptionType.String:
                 currentOptions = AnswersType.String;
+                for (int i = 0; i < optionImages.Length; i++)
+                {
+                    optionImages[i].gameObject.SetActive(false);
+                    optionStrings[i].gameObject.SetActive(true);
+                }
                 loadStrings(values);
                 break;
             case Option.OptionType.Image:
                 currentOptions = AnswersType.Image;
+                for (int i = 0; i < optionImages.Length; i++)
+                {
+                    optionImages[i].gameObject.SetActive(true);
+                    optionStrings[i].gameObject.SetActive(false);
+                }
                 StartCoroutine(loadImages(values));
                 break;
             default:
@@ -156,7 +166,7 @@ public class DialogBox : MonoBehaviour
         }
         else if (currentOptions == AnswersType.Image)
         {
-            optionImages[correctAnswerIndex].GetComponent<Outline>().effectColor = Color.green;
+            optionImages[correctAnswerIndex].gameObject.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 1);
         }
 
         if (selectedChoiceIndex != correctAnswerIndex)
@@ -167,7 +177,7 @@ public class DialogBox : MonoBehaviour
             }
             else if (currentOptions == AnswersType.Image)
             {
-                optionImages[selectedChoiceIndex].GetComponent<Outline>().effectColor = Color.red;
+                optionImages[selectedChoiceIndex].gameObject.GetComponent<Outline>().effectColor = new Color(1, 0, 0, 1);
             }
             return false;
         }
