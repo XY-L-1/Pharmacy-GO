@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogBox: {fileID: 0}
+  choiceBox: {fileID: 0}
   dialogText: {fileID: 0}
   letterPerSecond: 45
 --- !u!114 &390516285
@@ -931,7 +932,7 @@ Transform:
   m_GameObject: {fileID: 883684722}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.806, y: 0.852, z: -0.16936715}
+  m_LocalPosition: {x: -9.39, y: 0.72, z: -0.16936715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14538,18 +14539,11 @@ MonoBehaviour:
   highlightedColor: {r: 0, g: 0, b: 0, a: 0}
   dialogText: {fileID: 1513148027}
   actionSelector: {fileID: 111493243}
-  choiceSelector: {fileID: 1446072081}
-  ImageChoiceSelector: {fileID: 0}
+  optionSelector: {fileID: 0}
   actionTexts:
   - {fileID: 445877400}
   - {fileID: 1351460247}
-  choices:
-  - {fileID: 1500639744}
-  - {fileID: 1189185201}
-  - {fileID: 1683298152}
-  - {fileID: 2120098365}
-  - {fileID: 1598556399}
-  imageChoices: []
+  currentOptions: 0
 --- !u!1 &1580414217
 GameObject:
   m_ObjectHideFlags: 0
@@ -18368,9 +18362,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomQuestions:
-  - {fileID: 11400000, guid: 10e258f50bf743346a9485cfd4c3689c, type: 2}
-  - {fileID: 11400000, guid: f11a8b298a915df44ac8d466f2a1f5e0, type: 2}
-  - {fileID: 11400000, guid: 3ca22299e4b0d2c45bdeef10ef93c968, type: 2}
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
+  - question: 
+    image: 
+    options: []
+    answerIndex: 0
+    difficulty: 0
+    locations: 0
   correctAnswer: 8
   wrongAnswer: -5
 --- !u!156049354 &2085069548
