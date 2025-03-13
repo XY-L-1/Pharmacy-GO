@@ -9265,7 +9265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed96e364bf19804bbb7bd7c749f8fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPointID: EastRoute_Heart
+  spawnPointID: EastRoute_from_Heart
 --- !u!4 &537332541
 Transform:
   m_ObjectHideFlags: 0
@@ -10631,7 +10631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneBuildIndex: 4
-  targetSpawnPointID: SpawnFromEastRoute
+  targetSpawnPointID: SpawnFromEastRoute_Lungs
 --- !u!61 &1183155794
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10737,7 +10737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed96e364bf19804bbb7bd7c749f8fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPointID: EastRoute_Lungs
+  spawnPointID: EastRoute_from_Lungs
 --- !u!1 &1223305338
 GameObject:
   m_ObjectHideFlags: 0
@@ -10768,7 +10768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6915ce22acd32144b720a9df478a1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneBuildIndex: 4
+  sceneBuildIndex: 6
   targetSpawnPointID: SpawnFromEastRoute_Heart
 --- !u!61 &1223305340
 BoxCollider2D:
