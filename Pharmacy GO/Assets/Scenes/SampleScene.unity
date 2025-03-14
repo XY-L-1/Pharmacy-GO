@@ -10172,6 +10172,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318558904}
   m_CullTransparentMesh: 1
+--- !u!4 &1386850346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1590625015949813157, guid: a11fa347f3d274b4a901701c35a71fb4, type: 3}
+  m_PrefabInstance: {fileID: 3394032801218829525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1391133670
 GameObject:
   m_ObjectHideFlags: 0
@@ -10886,6 +10891,7 @@ MonoBehaviour:
   grassLayer:
     serializedVersion: 2
     m_Bits: 512
+  numberOfAreas: 4
 --- !u!212 &1643005724
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28783,6 +28789,7 @@ Transform:
   - {fileID: 1699572773}
   - {fileID: 135394866}
   - {fileID: 1898215233}
+  - {fileID: 1386850346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2134262558
@@ -28824,6 +28831,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
+
     m_TransformParent: {fileID: 262318872}
     m_Modifications:
     - target: {fileID: 1858339525657764941, guid: 5cef80a9c2fdef347b016b800268a18c, type: 3}
