@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using System.Collections;
 
 public class SpawnPoint : MonoBehaviour
 {
@@ -8,9 +7,6 @@ public class SpawnPoint : MonoBehaviour
 
     private void Start()
     {
-        //if (!PlayerPrefs.HasKey("SpawnPointID"))
-        //    return;
-
         string lastSpawnPointID = PlayerPrefs.GetString("SpawnPointID", "");
 
         if (lastSpawnPointID == spawnPointID)
@@ -28,8 +24,6 @@ public class SpawnPoint : MonoBehaviour
                     playerControl.StopMovement();
                 }
 
-                StartCoroutine(SetCameraTargetWithDelay(player));
-
                 // REASSIGN Cinemachine Camera Target
                 CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
                 if (cam != null)
@@ -38,18 +32,5 @@ public class SpawnPoint : MonoBehaviour
                 }
             }
         }
-
-        // PlayerPrefs.DeleteKey("SpawnPointID");
     }
-
-    IEnumerator SetCameraTargetWithDelay(GameObject player)
-    {
-        yield return new WaitForEndOfFrame();
-        CinemachineCamera cam = FindFirstObjectByType<CinemachineCamera>();
-        if (cam != null)
-        {
-            cam.Follow = player.transform;
-        }
-    }
-
 }

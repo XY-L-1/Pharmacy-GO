@@ -19,9 +19,9 @@ public class BattleSystem : MonoBehaviour
     int currentAction;  // store user selected action
     int currentAnswer;  // store user selected answer
     IEnumerator chooseAction;
-    Question question;
+    QuestionBase question;
 
-    private Option[] shuffleAnswersList;
+    private string[] shuffleAnswersList;
     private int shuffleAnswersIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartBattle()
@@ -29,8 +29,6 @@ public class BattleSystem : MonoBehaviour
 
         this.state = BattleState.START;
         this.question = mapData.GetRandomQuestion();
-        Debug.Log(this.question.question);
-        Debug.Log(this.question.options);
         currentAction = 0;
         currentAnswer = 0;      
         dialogBox.ResetDalogBox();
@@ -42,27 +40,27 @@ public class BattleSystem : MonoBehaviour
     // filling the question and answer texts
     public IEnumerator SetupBattle()
     {
-        shuffleAnswersList = (Option[])question.options.ToArray().Clone();
-        shuffleAnswersIndex = question.answerIndex;
+        shuffleAnswersList = (string[])question.Answers.Clone();
+        shuffleAnswersIndex = question.CorrectAnswerIndex;
         ShuffleAnswers(shuffleAnswersList, ref shuffleAnswersIndex);
         StartCoroutine(questionSection.TypeQuestion(question));
         if (shuffleAnswersList != null)
         {
-            dialogBox.SetAnswers(shuffleAnswersList);
+            dialogBox.SetAnswerTexts(shuffleAnswersList);
         }
         else
         {
-            dialogBox.SetAnswers(new Option[0]); // Pass an empty array if null
+            dialogBox.SetAnswerTexts(new string[0]); // Pass an empty array if null
         }
-        // if (question.AnswersImg != null)
-        // {
-        //     Sprite[] clonedAnswerImages = (Sprite[])question.AnswersImg.Clone();
-        //     dialogBox.SetAnswerImages(clonedAnswerImages);
-        // }
-        // else
-        // {
-        //     dialogBox.SetAnswerImages(null); // Pass null if there are no images
-        // }
+        if (question.AnswersImg != null)
+        {
+            Sprite[] clonedAnswerImages = (Sprite[])question.AnswersImg.Clone();
+            dialogBox.SetAnswerImages(clonedAnswerImages);
+        }
+        else
+        {
+            dialogBox.SetAnswerImages(null); // Pass null if there are no images
+        }
         questionUnit.SetImage(question);
         yield return StartCoroutine(dialogBox.TypeDialog("A wild question appeared!"));
         yield return new WaitForSeconds(1f);
@@ -84,7 +82,8 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.EnableDialogText(true);
             dialogBox.EnableActionSelector(false);
-            dialogBox.EnableOptionSelector(false);
+            dialogBox.EnableChoiceSelector(false);
+            dialogBox.EnableImageChoiceSelector(false);
         }
 
         else if (state == BattleState.PLAYERACTION)
@@ -95,14 +94,22 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.EnableActionSelector(false);
             dialogBox.EnableDialogText(false);
-            dialogBox.EnableOptionSelector(true);
+            if (question.AnswersImg != null && question.AnswersImg.Length > 0)
+            {
+                dialogBox.EnableImageChoiceSelector(true);
+            }
+            else
+            {
+                dialogBox.EnableChoiceSelector(true);
+            }
             HandleAnswer();
         }
         else if (state == BattleState.END)
         {
             dialogBox.EnableDialogText(true);
             dialogBox.EnableActionSelector(false);
-            dialogBox.EnableOptionSelector(false);
+            dialogBox.EnableChoiceSelector(false);
+            dialogBox.EnableImageChoiceSelector(false);
         }
 
     }
@@ -139,8 +146,8 @@ public class BattleSystem : MonoBehaviour
 
     void HandleAnswer()
     {
-        bool hasImageAnswers = dialogBox.currentOptions == DialogBox.AnswersType.Image;
-        int maxAnswers = question.options.Count;
+        bool hasImageAnswers = question.AnswersImg != null && question.AnswersImg.Length > 0;
+        int maxAnswers = hasImageAnswers ? question.AnswersImg.Length : shuffleAnswersList.Length;
 
         if (Input.GetKeyDown(KeyCode.D)) // Move Right
         {
@@ -153,25 +160,39 @@ public class BattleSystem : MonoBehaviour
                 --currentAnswer;
         }
 
-        // if (Input.GetKeyDown(KeyCode.S)) // Move Down
-        // {
-        //     if (currentAnswer < maxAnswers - 2)
-        //         currentAnswer += 3;
-        // }
-        // else if (Input.GetKeyDown(KeyCode.W)) // Move Up
-        // {
-        //     if (currentAnswer > 2)
-        //         currentAnswer -= 3;
-        // }
+        if (Input.GetKeyDown(KeyCode.S)) // Move Down
+        {
+            if (currentAnswer < maxAnswers - 2)
+                currentAnswer += 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.W)) // Move Up
+        {
+            if (currentAnswer > 2)
+                currentAnswer -= 3;
+        }
 
         // Update selection based on answer type
-        
-        dialogBox.UpdateChoiceSelection(currentAnswer);
+        if (hasImageAnswers)
+        {
+            dialogBox.UpdateImageChoiceSelection(currentAnswer);
+        }
+        else
+        {
+            dialogBox.UpdateChoiceSelection(currentAnswer);
+        }
 
         if (Input.GetKeyDown(KeyCode.Z) && !dialogBox.GetAnswerSelected())
         {
             bool isCorrect;
-            isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
+            if (hasImageAnswers)
+            {
+                isCorrect = dialogBox.DisplayImageAnswer(currentAnswer, shuffleAnswersIndex);
+
+            }
+            else
+            {
+                isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
+            }
 
             StartCoroutine(EndBattle(isCorrect));
         }
@@ -204,14 +225,14 @@ public class BattleSystem : MonoBehaviour
         OnBattleOver(answerCorrect);
     }                                                                                                                                                                                                                            
 
-    private void ShuffleAnswers(Option[] answerChoices, ref int correctAnswerIndex)
+    private void ShuffleAnswers(string[] answerChoices, ref int correctAnswerIndex)
     {
         System.Random rng = new System.Random();
         for (int i = 0; i < answerChoices.Length; i++)
         {
             int randomIndex = rng.Next(i, answerChoices.Length);
 
-            Option temp = answerChoices[i];
+            string temp = answerChoices[i];
             answerChoices[i] = answerChoices[randomIndex];
             answerChoices[randomIndex] = temp;
 

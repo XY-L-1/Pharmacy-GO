@@ -19,19 +19,12 @@ public class PlayerControl : MonoBehaviour
 
     public int numberOfAreas = 4;  // Adjust based on the number of areas
 
-    private Coroutine moveCoroutine;
-
-    private bool isInEncounter = false;
-
     private bool isMoving;
     private Vector2 input;
 
     private Animator animator;
 
     private List<bool> areaTracker; // List of areas the player has triggered
-    
-    [SerializeField] private GameObject ExclamationMark;
-
 
     private void Awake()
     {
@@ -50,15 +43,11 @@ public class PlayerControl : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         // DontDestroyOnLoad(gameObject);
-        if (ExclamationMark != null)
-        {
-            ExclamationMark.SetActive(false);
-        }
     }
 
     public void HandleUpdate()
     {
-        if (!isMoving && !isInEncounter){ 
+        if (!isMoving){ 
             // Get the input from the player
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
@@ -102,13 +91,7 @@ public class PlayerControl : MonoBehaviour
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
-        moveCoroutine = StartCoroutine(MoveCoroutine(targetPos)); // Store the coroutine reference
-        yield return moveCoroutine; // Wait for the coroutine to finish
-    }
-
-    private IEnumerator MoveCoroutine(Vector3 targetPos)
-    {
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) 
+        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon) // while the distance between the player and the target position is greater than 0
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
@@ -135,50 +118,17 @@ public class PlayerControl : MonoBehaviour
             if (UnityEngine.Random.Range(1, 101) <= 50)
             {
                 animator.SetBool("isMoving", false);
-                StartCoroutine(ShowExclamationAndEncounter());
-
+                OnEncountered();
             }
         }
     }
 
 
-    private IEnumerator ShowExclamationAndEncounter()
-    {
-        isInEncounter = true;  
-
-        ExclamationMark.SetActive(true); 
-
-        // Flashing effect
-        float flashDuration = 1.0f;  
-        float flashInterval = 0.1f;  
-        float timer = 0f; 
-
-        while (timer < flashDuration)
-        {
-            ExclamationMark.SetActive(!ExclamationMark.activeSelf); 
-            timer += flashInterval;
-            yield return new WaitForSeconds(flashInterval);
-        }
-
-
-        ExclamationMark.SetActive(true); 
-        yield return new WaitForSeconds(0.5f);  
-
-        Debug.Log("Hiding Exclamation Mark"); 
-        ExclamationMark.SetActive(false);  
-        OnEncountered();  
-        isInEncounter = false;  
-    }
-
     // New-map
     public void StopMovement()
     {
         // Stop any running movement coroutine
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);  // Stop the specific movement coroutine
-            moveCoroutine = null;  // Reset the coroutine reference
-        }
+        StopAllCoroutines();
 
         isMoving = false;
         input = Vector2.zero;
