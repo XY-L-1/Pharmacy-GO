@@ -13,10 +13,10 @@ public class QuestionSection : MonoBehaviour
         // questionImage = question.QuestionImg;
     }
 
-    public IEnumerator TypeQuestion(Question question)
+    public IEnumerator TypeQuestion(QuestionBase question)
     {
         questionText.text = "";
-        foreach (var letter in question.question.ToCharArray())
+        foreach (var letter in question.Question.ToCharArray())
         {
             questionText.text += letter;
             yield return new WaitForSeconds(1f/40);
