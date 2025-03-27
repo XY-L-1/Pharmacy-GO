@@ -4,7 +4,7 @@ using System.IO;
 
 public class MedicationExternalCSVImporter : EditorWindow
 {
-    private string baseOutputFolder = "Assets/Medications";  // Where to save .asset files
+    private string baseOutputFolder = "Assets/Resources/MedicationData";  // Where to save .asset files
     private string medImageFolder = "Assets/Art/MedIndexImage";  // If you still want to load images from inside the project
 
     [MenuItem("Tools/Medication CSV Importer (External)")]
@@ -86,10 +86,38 @@ public class MedicationExternalCSVImporter : EditorWindow
             // If you want to assign images from inside your project by name:
             newMed.image = LoadSpriteByName(medicationName, imageFolder);
 
-            // Build final asset path
-            string assetPath = Path.Combine(folder, medicationName + ".asset");
+            // Build the final folder path for this level (e.g. "Assets/Resources/MedicationData/Level1")
+            // Attempt to parse the "level" string to an integer
+            if (!int.TryParse(newMed.level, out int levelValue))
+            {
+                Debug.LogError($"'{newMed.level}' is not a valid numeric level for medication '{medicationName}'");
+                continue; // Skip creating this asset
+            }
+
+            // Check the range
+            if (levelValue < 1 || levelValue > 4)
+            {
+                Debug.LogError($"Invalid 'level' value (must be 1-4) for medication '{medicationName}': {newMed.level}");
+                continue;
+            }
+
+            // Construct the final folder path, e.g. "Assets/Resources/MedicationData/Level1"
+            string levelFolderPath = Path.Combine(folder, "Level" + levelValue);
+
+            levelFolderPath = levelFolderPath.Replace("\\", "/");
+
+            // Check if the level folder actually exists
+            if (!AssetDatabase.IsValidFolder(levelFolderPath))
+            {
+                Debug.LogError($"The folder '{levelFolderPath}' does not exist. Please create it or check the 'level' value.");
+                continue; // Skip creating this asset
+            }
+
+            // Construct the final .asset path inside the existing level folder
+            string assetPath = Path.Combine(levelFolderPath, $"{medicationName}.asset");
             assetPath = assetPath.Replace("\\", "/");
 
+            // Create the asset
             AssetDatabase.CreateAsset(newMed, assetPath);
         }
 

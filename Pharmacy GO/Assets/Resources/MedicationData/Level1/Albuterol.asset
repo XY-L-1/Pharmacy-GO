@@ -15,24 +15,14 @@ MonoBehaviour:
   medicationName: Albuterol
   image: {fileID: 21300000, guid: a5d4006fcc2bdb441b054d7973b0449f, type: 3}
   level: 1
-  treatmentOrgan: 
-  pharmacologicClass: "Short\u2010acting \u03B2\u2082\u2011adrenergic agonist (SABA)"
-  information: 
+  treatmentOrgan: Lungs
+  pharmacologicClass: "Short\u2011acting \u03B2\u2082\u2011adrenergic agonist (SABA)"
   mechanismOfAction: "Activates \u03B2\u2082 receptors \u2192 bronchodilation"
-  therapeuticUses: "Primary: Acute relief (\u201Crescue\u201D) in asthma; prophylaxis
-    for exercise\u2010induced bronchospasm\n\nSecondary: COPD rescue inhaler"
-  sideEffects: 'Tachycardia, palpitations
-
-
-    Tremor, nervousness
-
-
-    Hypokalemia
-    (especially with high doses)'
-  majorDrugInteractions: 'Caution with MAO inhibitors (excessive adrenergic effect)
-
-
-    Additive
-    tachycardia with other stimulants (e.g., sympathomimetics)'
+  therapeuticUses: "Primary: Acute asthma relief; prophylaxis for exercise\u2011induced
+    bronchospasm; Secondary: COPD rescue inhaler"
+  sideEffects: Tachycardia; palpitations; Tremor; Nervousness; Hypokalemia (high
+    doses)
+  majorDrugInteractions: Caution with MAO inhibitors; Additive tachycardia with other
+    stimulants
   funFact: "Known as \u201CSalbutamol\u201D in many countries\u2014\u201CSABA to
     the rescue!\u201D"
