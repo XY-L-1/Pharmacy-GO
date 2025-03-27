@@ -1,0 +1,4 @@
+medicationName,level,treatmentOrgan,pharmacologicClass,mechanismOfAction,therapeuticUses,sideEffects,majorDrugInteractions,funFact
+Timolol,1,Eyes,Nonselective b-blocker,Blocks b1 and b2 receptors,Glaucoma management; migraine prophylaxis,Bradycardia; hypotension; bronchospasm,Caution in asthma/COPD,Timolol tames high eye pressure
+Albuterol,2,Lungs,Short-acting b2-agonist,Activates b2 receptors for bronchodilation,Asthma rescue inhaler; exercise-induced bronchospasm,Tachycardia; tremors; nervousness,Caution with MAO inhibitors,Known as Salbutamol in many countries
+Metoprolol,3,Heart,Selective b1-blocker,Decreases HR and contractility,Hypertension; angina; arrhythmias,Bradycardia; hypotension; fatigue,Caution in diabetes (masks hypoglycemia),Meets the heart first (b1 > b2)

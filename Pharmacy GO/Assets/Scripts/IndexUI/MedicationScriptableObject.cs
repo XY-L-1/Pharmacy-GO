@@ -12,8 +12,6 @@ public class Medication : ScriptableObject
     public string pharmacologicClass;  
 
     [Header("Pharmacological Details")]
-    [TextArea]
-    public string information;      
     
     [TextArea]
     public string mechanismOfAction;

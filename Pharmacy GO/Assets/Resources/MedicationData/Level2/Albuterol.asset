@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Albuterol
   m_EditorClassIdentifier: 
   medicationName: Albuterol
-  level: 1
-  treatmentOrganList: 
   image: {fileID: 21300000, guid: a5d4006fcc2bdb441b054d7973b0449f, type: 3}
-  information: 
-  sideEffects: 
+  level: 2
+  treatmentOrgan: Lungs
+  pharmacologicClass: Short-acting b2-agonist
+  mechanismOfAction: Activates b2 receptors for bronchodilation
+  therapeuticUses: Asthma rescue inhaler; exercise-induced bronchospasm
+  sideEffects: Tachycardia; tremors; nervousness
+  majorDrugInteractions: Caution with MAO inhibitors
+  funFact: Known as Salbutamol in many countries
