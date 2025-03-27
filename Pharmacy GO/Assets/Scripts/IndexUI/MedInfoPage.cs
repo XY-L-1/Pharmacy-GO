@@ -18,7 +18,7 @@ public class MedInfoPage : MonoBehaviour
         medName.text = med.medicationName;
         medImage.sprite = med.image;
         level.text = med.level;
-        organ.text = med.treatmentOrganList;
+        organ.text = med.treatmentOrgan;
         
         // curently the string is fix to just Description and Side Effect, can make it dynamic later if there is a need
         information.text = "Description: \n" + med.information + "\n\nSide Effect: \n" + med.sideEffects;

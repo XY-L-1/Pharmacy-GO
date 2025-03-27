@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+
 
 public class IndexUI : MonoBehaviour
 {
@@ -56,9 +58,29 @@ public class IndexUI : MonoBehaviour
 
     private void LoadMedications()
     {
-        Medication[] medications = Resources.LoadAll<Medication>("Medications");
+        Medication[] allMedications = new Medication[0];
+        if(playerControl.HasTriggeredArea(1))
+        {
+            Medication[] medsLevel1 = Resources.LoadAll<Medication>("MedicationData/Level1");
+            allMedications = allMedications.Concat(medsLevel1).ToArray();
+        }
+        if(playerControl.HasTriggeredArea(2))
+        {
+            Medication[] medsLevel2 = Resources.LoadAll<Medication>("MedicationData/Level2");
+            allMedications = allMedications.Concat(medsLevel2).ToArray();
+        }
+        if(playerControl.HasTriggeredArea(3))
+        {
+            Medication[] medsLevel3 = Resources.LoadAll<Medication>("MedicationData/Level3");
+            allMedications = allMedications.Concat(medsLevel3).ToArray();
+        }
+        if(playerControl.HasTriggeredArea(4))
+        {
+            Medication[] medsLevel4 = Resources.LoadAll<Medication>("MedicationData/Level4");
+            allMedications = allMedications.Concat(medsLevel4).ToArray();
+        }
 
-        foreach (Medication med in medications)
+        foreach (Medication med in allMedications)
         {
             if (med.level == "1")
             {
