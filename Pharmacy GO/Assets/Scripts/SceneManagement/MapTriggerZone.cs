@@ -9,7 +9,7 @@ public class MapTriggerZone : MonoBehaviour
         if (other.CompareTag("Player"))  // Ensure the player has the correct tag
         {
             other.GetComponent<PlayerControl>().SetAreaTracker(areaIndex);
-            Debug.Log("Player Triggered the map!");
+            Debug.Log("Player Triggered the map!" + areaIndex);
             Destroy(gameObject);  // Remove trigger after activation (optional)
         }
     }
