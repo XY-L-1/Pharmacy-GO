@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 
 
     GameState state;
+
     private void Start()
     {
         playerControl.OnEncountered += StartBattle;
@@ -36,12 +37,31 @@ public class GameController : MonoBehaviour
     }
     void StartBattle()
     {
+        MapArea localMapArea = FindObjectOfType<MapArea>();
+        if(localMapArea != null)
+        {
+            battleSystem.SetMapData(localMapArea);
+        }
+
+        HudController localHud = FindObjectOfType<HudController>();
+        if (localHud != null)
+        {
+            battleSystem.SetHudController(localHud);
+        }
+
+        Camera localCamera = Camera.main;
+        if(localCamera != null)
+        {
+            worldCamera = localCamera;
+        }
+
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         playerControl.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(false);
         battleSystem.StartBattle();
     }
+
     void EndBattle(bool playerWin)
     {
         state = GameState.FreeRoam;
