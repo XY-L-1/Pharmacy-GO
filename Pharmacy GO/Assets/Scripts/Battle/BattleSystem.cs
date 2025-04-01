@@ -70,6 +70,16 @@ public class BattleSystem : MonoBehaviour
         PlayerAction();
     }
 
+    public void SetMapData(MapArea newMapData)
+    {
+        this.mapData = newMapData;
+    }
+
+    public void SetHudController(HudController newHudController)
+    {
+        this.hudController = newHudController;
+    }
+
     void PlayerAction()
     {
         state = BattleState.PLAYERACTION;
