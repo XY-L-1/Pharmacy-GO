@@ -11267,6 +11267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f5d2fef106aad4585cb916b656eb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxQuestions: 3
 --- !u!1 &1666828482
 GameObject:
   m_ObjectHideFlags: 0
