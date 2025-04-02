@@ -10,9 +10,16 @@ public class GameController : MonoBehaviour
 
     GameState state;
 
+    public static GameController Instance { get; private set; }
+
+    public void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
-        playerControl.OnEncountered += StartBattle;
+        //playerControl.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
         // playerControl.OnEnterDialogue += StartDialogue;
         // playerControl.OnEndDialogue += EndDialogue;
@@ -35,7 +42,8 @@ public class GameController : MonoBehaviour
         }
 
     }
-    void StartBattle()
+
+    public void StartBattle(bool isBoss = false, int maxQuestions = 1)
     {
         MapArea localMapArea = FindObjectOfType<MapArea>();
         if(localMapArea != null)
@@ -59,7 +67,14 @@ public class GameController : MonoBehaviour
         battleSystem.gameObject.SetActive(true);
         playerControl.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(false);
-        battleSystem.StartBattle();
+        if (isBoss)
+        {
+            battleSystem.BossBattle(maxQuestions);
+        }
+        else
+        {
+            battleSystem.StartBattle();
+        }  
     }
 
     void EndBattle(bool playerWin)

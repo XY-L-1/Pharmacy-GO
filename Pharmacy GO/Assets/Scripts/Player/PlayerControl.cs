@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask grassLayer;
 
-    public event Action OnEncountered;
+    //public event Action OnEncountered;
 
     public int numberOfAreas = 4;  // Adjust based on the number of areas
 
@@ -166,7 +166,7 @@ public class PlayerControl : MonoBehaviour
 
         Debug.Log("Hiding Exclamation Mark"); 
         ExclamationMark.SetActive(false);  
-        OnEncountered();  
+        GameController.Instance.StartBattle();  
         isInEncounter = false;  
     }
 
