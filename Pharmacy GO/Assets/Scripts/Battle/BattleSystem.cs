@@ -227,6 +227,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator EndBattle(bool answerCorrect)
     {
         yield return new WaitForSeconds(2.5f);
+        state = BattleState.END;
         Debug.Log("answerCorrect: " + answerCorrect);
         dialogBox.EnableDialogText(true);
             if (answerCorrect){
@@ -271,7 +272,6 @@ public class BattleSystem : MonoBehaviour
                 currentBossQuestion = 0;
             }
         }
-        state = BattleState.END;
         yield return new WaitForSeconds(2.5f);
         dialogBox.ResetDalogBox();
         hudController.TurnHudOn();
