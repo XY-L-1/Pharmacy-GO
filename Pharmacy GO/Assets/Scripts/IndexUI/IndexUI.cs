@@ -29,6 +29,8 @@ public class IndexUI : MonoBehaviour
         // Set the canvas group to be visible and interactable
         canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
         
     }
     /// This method is called when the IndexUI is opened and will keep the game object to the next scene 
@@ -159,12 +161,16 @@ public class IndexUI : MonoBehaviour
         // IndexUIPanel.SetActive(false);
         canvasGroup.alpha = 0f;
         playerControl.gameObject.SetActive(true);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
     public void OpenIndexUI()
     {
         // IndexUIPanel.SetActive(true);
         canvasGroup.alpha = 1f;
         playerControl.gameObject.SetActive(false);
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
 
         // playerControl.gameObject.SetActive(false);
         // Create ScrollRects for Topics

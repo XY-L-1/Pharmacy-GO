@@ -4,6 +4,7 @@ public class PauseMenu : MonoBehaviour
 {
     private static PauseMenu instance;
     [SerializeField] GameObject pauseMenu;
+    
     public void Pause()
     {
         pauseMenu.SetActive(true);
@@ -11,17 +12,5 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenu.SetActive(false);
-    }
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 }

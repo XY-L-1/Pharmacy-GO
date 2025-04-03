@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
+    [SerializeField] private Joystick joystick;
 
     public static PlayerControl Instance { get; private set; }
 
@@ -60,8 +61,13 @@ public class PlayerControl : MonoBehaviour
     {
         if (!isMoving && !isInEncounter){ 
             // Get the input from the player
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
+            float h = joystick.Horizontal;
+            float v = joystick.Vertical;
+
+            // If joystick is “centered,” read keyboard
+            input.x = Mathf.Abs(h) > 0.1f ? h : Input.GetAxisRaw("Horizontal");
+            input.y = Mathf.Abs(v) > 0.1f ? v : Input.GetAxisRaw("Vertical");
+
 
             if (input != Vector2.zero)
             {   
