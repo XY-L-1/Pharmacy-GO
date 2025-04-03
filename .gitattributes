@@ -1,4 +1,0 @@
-# Use UnityYAMLMerge for Unity assets
-*.unity  merge=unityyamlmerge
-*.prefab merge=unityyamlmerge
-*.asset  merge=unityyamlmerge
