@@ -82,6 +82,12 @@ public class PlayerControl : MonoBehaviour
                 Interact();
 
             }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                CoinManager.Instance.AddCoin(10);
+                Debug.Log("Cheat activated: 10 coins added.");
+            }
         }
     }
 
