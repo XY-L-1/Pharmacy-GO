@@ -12,6 +12,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private DialogBox dialogBox;
     [SerializeField] private QuestionUnit questionUnit;
     [SerializeField] private HudController hudController;
+    [SerializeField] private GameObject levelCompletePanel;
 
     public event Action<bool> OnBattleOver;
 
@@ -251,7 +252,7 @@ public class BattleSystem : MonoBehaviour
         }
         if (isBossBattle)
         {
-            yield return new WaitForSeconds(2.5f);
+            //yield return new WaitForSeconds(2.5f);
             currentBossQuestion += 1;
             if (currentBossQuestion < maxBossQuestions) 
             {
@@ -263,6 +264,19 @@ public class BattleSystem : MonoBehaviour
                 if (bossQuestionsRight == maxBossQuestions)
                 {
                     yield return StartCoroutine(dialogBox.TypeDialog("You got them all right! You win!"));
+
+                    dialogBox.ResetDalogBox();
+                    if (levelCompletePanel != null)
+                    {
+                        levelCompletePanel.SetActive(true);
+                        yield return new WaitForSeconds(3f);
+                        levelCompletePanel.SetActive(false);
+                    }
+
+                    OnBattleOver(answerCorrect);
+                    hudController.TurnHudOn();
+                    yield return null;
+                    // yield break;
                 }
                 else
                 {
