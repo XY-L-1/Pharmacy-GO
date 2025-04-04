@@ -180,6 +180,11 @@ public class BattleSystem : MonoBehaviour
         dialogBox.UpdateActionSelection(currentAction);
 
     }
+    public void OnClickFightButton()
+    {
+        state = BattleState.PLAYERANSWER;
+        dialogBox.UpdateActionSelection(0);
+    }
 
     void HandleAnswer()
     {
@@ -224,6 +229,23 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.UpdateActionSelection(currentAnswer);
         }
+    }
+    public void OnClickAnswerButton(int answerIndex)
+    {
+        Debug.Log("Answer button clicked: " + answerIndex);
+        currentAnswer = answerIndex;
+        dialogBox.UpdateChoiceSelection(currentAnswer);
+        bool hasImageAnswers = dialogBox.currentOptions == DialogBox.AnswersType.Image;
+        
+        bool isCorrect;
+        isCorrect = dialogBox.DisplayAnswer(currentAnswer, shuffleAnswersIndex);
+        StartCoroutine(EndBattle(isCorrect));
+
+        if (!hasImageAnswers)
+        {
+            dialogBox.UpdateActionSelection(currentAnswer);
+        }
+        
     }
     IEnumerator EndBattle(bool answerCorrect)
     {
