@@ -85,7 +85,7 @@ public class PlayerControl : MonoBehaviour
             }
             animator.SetBool("isMoving", isMoving);
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 Interact();
 
